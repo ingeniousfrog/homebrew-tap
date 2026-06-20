@@ -6,22 +6,22 @@ class Mollow < Formula
   desc "Cross-platform machine inspection and performance-baseline CLI"
   homepage "https://github.com/ingeniousfrog/Mollow"
   license "Apache-2.0"
-  version "0.1.0"
+  version "0.1.1"
 
   on_macos do
     on_arm do
-      url "https://github.com/ingeniousfrog/Mollow/releases/download/v0.1.0/mollow-aarch64-apple-darwin.tar.gz"
-      sha256 "240a6728102ddee8edc051e0243ba894e0b0fbbab7089dbf798c26d22734b4e8"
+      url "https://github.com/ingeniousfrog/Mollow/releases/download/v0.1.1/mollow-aarch64-apple-darwin.tar.gz"
+      sha256 "e23b64c1b7c6af9c44e2f7d9f186d1f227865053d998cc618875bfd18b53e869"
     end
     on_intel do
-      url "https://github.com/ingeniousfrog/Mollow/releases/download/v0.1.0/mollow-x86_64-apple-darwin.tar.gz"
-      sha256 "7fc9128816aefca6b7a5ac0f4ee06ea42e0757319e391c9a97163ab672525f86"
+      url "https://github.com/ingeniousfrog/Mollow/releases/download/v0.1.1/mollow-x86_64-apple-darwin.tar.gz"
+      sha256 "23c6500fead62e97c3a4a8847716db7679952e8ca0246d2a979eac814c46a896"
     end
   end
 
   on_linux do
-    url "https://github.com/ingeniousfrog/Mollow/releases/download/v0.1.0/mollow-x86_64-unknown-linux-gnu.tar.gz"
-    sha256 "50b50b5fc5a6e6d27a2b64f701a0de27208100532413d6cb73ab7c9ce6e16818"
+    url "https://github.com/ingeniousfrog/Mollow/releases/download/v0.1.1/mollow-x86_64-unknown-linux-gnu.tar.gz"
+    sha256 "626b6eff23ad0f7d74fb93bcbb579ff5ba0100a42749adf5034e98a2433a0528"
   end
 
   def install
