@@ -1,6 +1,6 @@
 # ingeniousfrog/homebrew-tap
 
-Personal [Homebrew tap](https://docs.brew.sh/Taps) for macOS apps published under the [ingeniousfrog](https://github.com/ingeniousfrog) GitHub account.
+Personal [Homebrew tap](https://docs.brew.sh/Taps) for apps and CLI tools published under the [ingeniousfrog](https://github.com/ingeniousfrog) GitHub account.
 
 **Live repo:** https://github.com/ingeniousfrog/homebrew-tap
 
@@ -8,7 +8,18 @@ Personal [Homebrew tap](https://docs.brew.sh/Taps) for macOS apps published unde
 
 ```bash
 brew tap ingeniousfrog/tap
+```
+
+### GUI apps (Casks)
+
+```bash
 brew install --cask cachebar
+```
+
+### CLI tools (Formulas)
+
+```bash
+brew install mollow
 ```
 
 Upgrade later:
@@ -16,40 +27,52 @@ Upgrade later:
 ```bash
 brew update
 brew upgrade --cask cachebar
+brew upgrade mollow
 ```
 
 Uninstall:
 
 ```bash
 brew uninstall --cask cachebar
-brew untap ingeniousfrog/tap   # optional, if no other casks from this tap are installed
+brew uninstall mollow
+brew untap ingeniousfrog/tap   # optional, if nothing else from this tap is installed
 ```
 
 ## What is in this tap?
 
-Each app is one file under `Casks/`:
-
 ```text
 homebrew-tap/
   Casks/
-    cachebar.rb      # CacheBar
-    other-app.rb     # future apps
+    cachebar.rb      # CacheBar (GUI)
+  Formula/
+    mollow.rb        # Mollow (CLI)
   README.md
 ```
 
-**Yes — you can reuse this same tap for other apps.** Add another `Casks/<name>.rb`, push, and users install with:
+**Yes — you can reuse this same tap for other apps and CLI tools.** Add another cask or formula, push, and users install with:
 
 ```bash
-brew install --cask <name>
+brew install --cask <name>   # GUI .app bundles
+brew install <name>          # CLI binaries
 ```
-
-No need to create a new tap per app. One tap (`ingeniousfrog/tap`) can host many casks.
 
 Naming rules:
 
-- File: `Casks/myapp.rb` → cask token `myapp`
-- User command: `brew install --cask myapp`
-- Use lowercase and hyphens in the cask name (Homebrew convention)
+- Cask file: `Casks/myapp.rb` → `brew install --cask myapp`
+- Formula file: `Formula/myapp.rb` → `brew install myapp`
+- Use lowercase and hyphens (Homebrew convention)
+
+## Maintainer: update Mollow after a release
+
+1. Publish [Mollow GitHub Release](https://github.com/ingeniousfrog/Mollow/releases) assets (tag `v<version>`).
+2. From the **Mollow** repo:
+
+   ```bash
+   ./packaging/update-homebrew-sha256.sh <version>
+   ./packaging/push-homebrew-tap.sh
+   ```
+
+   Or copy `packaging/homebrew/mollow.rb` to `Formula/mollow.rb` in this repository and push.
 
 ## Maintainer: update CacheBar after a release
 
@@ -64,7 +87,6 @@ Naming rules:
 4. Push to **homebrew-tap**:
 
    ```bash
-   # from CacheBar repo — copies homebrew-tap/ and pushes
    ./scripts/push-homebrew-tap.sh
    ```
 
@@ -72,25 +94,28 @@ Naming rules:
 
 ## Maintainer: add a new app to this tap
 
-1. Create `Casks/<app-token>.rb` (see `cachebar.rb` as a template).
+1. Create `Casks/<app-token>.rb` for GUI apps or `Formula/<app-token>.rb` for CLI tools.
 2. Point `url` at a stable GitHub Release (or other HTTPS) asset; set `sha256`.
-3. Set `app "<Name>.app"` to match the bundle inside the DMG.
+3. For casks, set `app "<Name>.app"` to match the bundle inside the DMG.
 4. Commit and push to `homebrew-tap`.
-5. Document in that app’s README:
+5. Document in that project’s README:
 
    ```bash
    brew tap ingeniousfrog/tap
-   brew install --cask <app-token>
+   brew install --cask <app-token>   # GUI
+   brew install <app-token>            # CLI
    ```
 
-CLI tools use `Formula/` instead of `Casks/`; GUI `.app` bundles use **Casks** (as here).
+CLI tools use `Formula/`; GUI `.app` bundles use **Casks**.
 
 ## Notes
 
 - This tap is **not** [homebrew-core](https://github.com/Homebrew/homebrew-cask); you maintain it yourself.
 - `cachebar` cask is **Apple Silicon only** (`depends_on arch: :arm64`).
-- Unsigned builds may still need **Open Anyway** on first launch (same as manual DMG install).
+- `mollow` formula supports macOS (Apple Silicon and Intel) and Linux x86_64.
+- Unsigned GUI builds may still need **Open Anyway** on first launch (same as manual DMG install).
 
-## Sync from CacheBar repo
+## Sync from source repos
 
-The `homebrew-tap/` folder in [ingeniousfrog/CacheBar](https://github.com/ingeniousfrog/CacheBar) is the **source template** for this tap. After editing casks there, run `./scripts/push-homebrew-tap.sh` to publish.
+- CacheBar: the `homebrew-tap/` folder in [ingeniousfrog/CacheBar](https://github.com/ingeniousfrog/CacheBar) is a source template for casks.
+- Mollow: use `packaging/homebrew/mollow.rb` and `./packaging/push-homebrew-tap.sh` from [ingeniousfrog/Mollow](https://github.com/ingeniousfrog/Mollow).
